@@ -1,0 +1,122 @@
+{{define "index"}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="public/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Groupie blya Tracker</title>
+</head>
+
+<body>
+    <form action="/searchz" meethod="post">
+        
+        <input type="checkbox" id="artist" value="artist" name="input">
+        <label for="artist">Artists:</label>
+        <input type="checkbox" id="members" value="members" name="input">
+        <label for="members">Members:</label>
+
+        <input type="checkbox" id="locations" value="locations" name="input">
+        <label for="locations">Locations:</label>
+
+        <input type="checkbox" id="city" value="city" name="input">
+        <label for="city">Cuty was group:</label>
+        <input type="checkbox" id="albumdate" value="albumdate" name="input">
+        <label for="albumdate">First album date:</label>
+
+        <input type="checkbox" id="creation" value="creation" name="input">
+        <label for="creation">Creation date:</label>
+
+        <!-- <input type="checkbox" id="flartmemb" value="flartmemb" name="input">
+        <label for="flartmemb">First letter:</label> -->
+        <input list="art" name="value">
+        <datalist id="art">
+            {{range .LocationsHtml.Index}}
+            {{range .Locations}}
+            <option value="{{.}}"></option>
+            {{end}}
+            {{end}}
+
+            {{range .Artist}}
+
+            {{range .Members}}
+            <option value="{{.}}"></option>
+            {{end}}
+
+            <option value="{{.Name}}"></option>
+
+
+            <option value="{{.FirstAlbum}}"></option>
+            <option value="{{.CreationDate}}"></option>
+
+            {{end}}
+
+            {{range .RelationHtml.Index}}
+            {{range .DatesLocations}}
+            {{range .}}
+            <option value="{{.}}"></option>
+            {{end}}
+
+            {{end}}
+            {{end}}
+
+        </datalist>
+
+
+
+        <!-- <input list="artmem" name="memart">
+        <datalist id="artmem">
+
+            {{range .Artist}}
+
+            {{range .Members}}
+            <option value="{{.}}"></option>
+            {{end}}
+
+
+            <option value="{{.Name}}"></option>
+            {{end}}
+
+        </datalist> -->
+
+        <input type="submit" value="search">
+
+
+
+
+    </form>
+
+    <div class="container">
+        <div class="row">
+            {{range .Artist}}
+
+            <div class="col-3 ddd">
+
+                <form method="POST" action="/artist" class="form-wrapper">
+                    <input type="hidden" name="uid" value="{{ .ID }}" />
+                    <div class="container">
+
+                        <img class="img-artist " src="{{.Image}}" alt="{{.Name}}">
+                        <h2 class="name-artist"> {{.Name}} </h2>
+
+                        <input class="btn btn-primary" type="submit" value="see more" />
+                    </div>
+                </form>
+                {{/* <a href="/artist/{{.Name}}"> {{.Name}} </a> */}}
+
+            </div>
+            {{end}}
+        </div>
+    </div>
+    </div>
+
+</body>
+
+</html>
+
+{{end}}
